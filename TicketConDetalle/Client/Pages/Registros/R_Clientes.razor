@@ -1,0 +1,188 @@
+﻿@page "/RegistroCliente"
+@page "/RegistroCliente/{ClienteId:int}"
+@using TicketConDetalle.Shared.Models;
+@inject HttpClient httpClient
+
+<EditForm Model="cliente" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="col-7">
+        <div class="card">
+            <div class="card-header">
+                <h1>Registro cliente</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <label>ID:</label>
+                    <div class=" col-3">
+                        <InputNumber @bind-Value="cliente.ClienteId" class="form-control"></InputNumber>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary oi oi-magnifying-glass" @onclick="Buscar"></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Nombre: </label>
+                    <InputText @bind-Value="cliente.Nombre" class="form-control"></InputText>
+                    <ValidationMessage For="@(() => cliente.Nombre)" />
+                    @if (nombreRepetido)
+                    {
+                        <p class="validation-message">Este nombre ya esta registrado</p>
+                    }
+                </div>
+                <div class="row">
+                    <label>Email:</label>
+                    <InputText @bind-Value="cliente.Email" class="form-control" type="email"></InputText>
+                    <ValidationMessage For="@(() => cliente.Email)" />
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Rnc:</label>
+                        <InputText @bind-Value="cliente.Rnc" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => cliente.Rnc)" />
+                        @if (RncRepetido)
+                        {
+                            <p class="validation-message">Este Rnc ya esta registrado</p>
+                        }
+                    </div>
+                    <div class="col">
+                        <label>Celular:</label>
+                        <InputText @bind-Value="cliente.Celular" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => cliente.Celular)" />
+                    </div>
+                    <div class="col">
+                        <label>Telefono:</label>
+                        <InputText @bind-Value="cliente.Telefono" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => cliente.Telefono)" />
+                    </div>
+                </div>
+                <div class="row">
+                    <label style="margin-right:1rem">Dirección:</label>
+                    <InputText @bind-Value="cliente.Direccion" class="form-control"></InputText>
+                    <ValidationMessage For="@(() => cliente.Direccion)" />
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button type="button" class="btn btn-primary " @onclick="Nuevo">Nuevo <i class="oi oi-file" /></button>
+                <button class="btn btn-success">Guardar <i class="oi oi-document" /></button>
+                <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="oi oi-trash" /></button>
+            </div>
+        </div>
+    </div>  
+
+    
+
+
+    
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public int ClienteId { get; set; }
+
+    public Clientes cliente { get; set; } = new Clientes();
+
+    public bool nombreRepetido = false;
+
+    public bool RncRepetido = false;
+
+    public bool IdMenorCero = false;
+
+   
+    protected override async void OnInitialized()
+    {
+        if (ClienteId > 0)
+        {
+            cliente.ClienteId = ClienteId;
+            Buscar();
+        }
+    }
+
+    public async Task Buscar()
+    {
+        var clienteEncotrado = await httpClient.GetFromJsonAsync<Clientes>($"api/Clientes/{cliente.ClienteId}");
+        if (clienteEncotrado != null)
+        {
+            this.cliente = clienteEncotrado;
+            StateHasChanged();
+        }
+        else
+        {
+            //var mensaje = new NotificationMessage
+            //    {
+            //        Severity = NotificationSeverity.Error,
+            //        Summary = "Error Aporte",
+            //        Detail = "Aporte no encontrado",
+            //        Duration = 5_000
+            //    };
+            //notificationSevice.Notify(mensaje);
+        }
+    }
+
+    void Nuevo()
+    {
+        this.cliente = new Clientes();
+        nombreRepetido = false;
+        RncRepetido = false;
+        IdMenorCero = false;
+        //var mensaje = new NotificationMessage
+        //    {
+        //        Severity = NotificationSeverity.Success,
+        //        Summary = "Nuevo ",
+        //        Detail = "Puedes escribir un nuevo aporte",
+        //        Duration = 5_000
+        //    };
+        //notificationSevice.Notify(mensaje);
+        return;
+    }
+
+    public async Task Guardar()
+    {
+        using var response = await httpClient.PostAsJsonAsync("api/Clientes", cliente);
+        if (!response.IsSuccessStatusCode)
+        {
+            //var mensaje = new NotificationMessage
+            //    {
+            //        Severity = NotificationSeverity.Error,
+            //        Summary = "Erro ",
+            //        Detail = "Aporte no guardado",
+            //        Duration = 5_000
+            //    };
+            //notificationSevice.Notify(mensaje);
+            return;
+        }
+        var clienteDevuelto = await response.Content.ReadFromJsonAsync<Clientes>();
+        if (clienteDevuelto is not null)
+        {
+            cliente = clienteDevuelto;
+            StateHasChanged();
+            Nuevo();
+        }
+        
+    }
+
+    public async Task Eliminar()
+    {
+        using var response = await httpClient.DeleteAsync($"api/Clientes/{cliente.ClienteId}");
+        if (!response.IsSuccessStatusCode)
+        {
+            //var mensaje = new NotificationMessage
+            //    {
+            //        Severity = NotificationSeverity.Success,
+            //        Summary = "Eliminado ",
+            //        Detail = "Haz podido eliminar el aporte con exito",
+            //        Duration = 5_000
+            //    };
+            //notificationSevice.Notify(mensaje);
+            return;
+        }
+        else
+            Nuevo();
+    }
+
+    //bool  Validar()
+    //{
+        
+    //}
+
+  }
