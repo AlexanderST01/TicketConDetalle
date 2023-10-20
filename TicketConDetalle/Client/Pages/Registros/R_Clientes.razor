@@ -1,6 +1,6 @@
 ﻿@page "/RegistroCliente"
 @page "/RegistroCliente/{ClienteId:int}"
-@using TicketConDetalle.Shared.Models;
+@inject NotificationService notificationService
 @inject HttpClient httpClient
 
 <EditForm Model="cliente" OnValidSubmit="Guardar">
@@ -94,7 +94,7 @@
         if (ClienteId > 0)
         {
             cliente.ClienteId = ClienteId;
-            Buscar();
+            await Buscar();
         }
     }
 
@@ -108,14 +108,14 @@
         }
         else
         {
-            //var mensaje = new NotificationMessage
-            //    {
-            //        Severity = NotificationSeverity.Error,
-            //        Summary = "Error Aporte",
-            //        Detail = "Aporte no encontrado",
-            //        Duration = 5_000
-            //    };
-            //notificationSevice.Notify(mensaje);
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Error Aporte",
+                    Detail = "Aporte no encontrado",
+                    Duration = 5_000
+                };
+            notificationService.Notify(mensaje);
         }
     }
 
@@ -125,14 +125,16 @@
         nombreRepetido = false;
         RncRepetido = false;
         IdMenorCero = false;
-        //var mensaje = new NotificationMessage
-        //    {
-        //        Severity = NotificationSeverity.Success,
-        //        Summary = "Nuevo ",
-        //        Detail = "Puedes escribir un nuevo aporte",
-        //        Duration = 5_000
-        //    };
-        //notificationSevice.Notify(mensaje);
+
+        var mensaje = new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Nuevo ",
+                Detail = "Puedes escribir un nuevo aporte",
+                Duration = 5_000
+            };
+        notificationService.Notify(mensaje);
+
         return;
     }
 
@@ -141,14 +143,14 @@
         using var response = await httpClient.PostAsJsonAsync("api/Clientes", cliente);
         if (!response.IsSuccessStatusCode)
         {
-            //var mensaje = new NotificationMessage
-            //    {
-            //        Severity = NotificationSeverity.Error,
-            //        Summary = "Erro ",
-            //        Detail = "Aporte no guardado",
-            //        Duration = 5_000
-            //    };
-            //notificationSevice.Notify(mensaje);
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Erro ",
+                    Detail = "Cliente no guardado",
+                    Duration = 5_000
+                };
+            notificationService.Notify(mensaje);
             return;
         }
         var clienteDevuelto = await response.Content.ReadFromJsonAsync<Clientes>();
@@ -157,6 +159,14 @@
             cliente = clienteDevuelto;
             StateHasChanged();
             Nuevo();
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Guardado ",
+                    Detail = "Cliente guardado",
+                    Duration = 5_000
+                };
+            notificationService.Notify(mensaje);
         }
         
     }
@@ -166,23 +176,28 @@
         using var response = await httpClient.DeleteAsync($"api/Clientes/{cliente.ClienteId}");
         if (!response.IsSuccessStatusCode)
         {
-            //var mensaje = new NotificationMessage
-            //    {
-            //        Severity = NotificationSeverity.Success,
-            //        Summary = "Eliminado ",
-            //        Detail = "Haz podido eliminar el aporte con exito",
-            //        Duration = 5_000
-            //    };
-            //notificationSevice.Notify(mensaje);
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Eliminado ",
+                    Detail = "Haz podido eliminar el aporte con exito",
+                    Duration = 5_000
+                };
+            notificationService.Notify(mensaje);
             return;
         }
         else
             Nuevo();
     }
 
-    //bool  Validar()
+    //public async bool Validar()
     //{
-        
+    //    var listClientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+
+    //    nombreRepetido = listClientes.Where(c => c.Nombre == cliente.Nombre && c.ClienteId != cliente.ClienteId).Any();
+    //    RncRepetido = listClientes.Where(c => c.Rnc == cliente.Rnc && c.ClienteId != cliente.ClienteId).Any();
+
+    //    return nombreRepetido || RncRepetido || cliente.ClienteId <= 0;
     //}
 
   }
