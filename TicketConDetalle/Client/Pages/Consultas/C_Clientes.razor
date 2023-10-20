@@ -1,53 +1,57 @@
 ﻿@page "/ConsultaCliente"
 @inject HttpClient httpClient
 
-
-<div>    
+<div>
     <div class="row justify-content-start ">
         <div class=" col-sm-10 col-md-9 col-lg-10 col-xl-xxl-7 ">
-                  <div class="card">
-        <div class="card-header">
-            <h1>Consulta Clientes</h1>
-            <div class="input-group">
-                <InputNumber @bind-Value="ID" class="form-control"></InputNumber>
-                <button type="button" class="btn btn-outline-primary oi oi-magnifying-glass" @onclick="Buscar"></button>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive ">
-                <table border="1" class="table table-bordered table-striped ">
-                    <thead>
-                        <tr class="table-secondary">
-                            <th >ID</th>
-                            <th >Nombre</th>
-                            <th >Telefono</th>
-                            <th >Celular</th>
-                            <th >Rnc</th>
-                            <th >Email</th>
-                            <th >Direccion</th>
-                            <th>Ver</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var tabla in Clientes)
-                        {
-                            <tr>
-                                <td>@tabla.ClienteId</td>
-                                <td >@tabla.Nombre</td>
-                                <td >@tabla.Telefono</td>
-                                <td >@tabla.Celular</td>
-                                <td >@tabla.Rnc</td>
-                                <td >@tabla.Email</td>
-                                <td >@tabla.Direccion</td>
+            <div class="card">
+                <div class="card-header">
+                    <h1>Consulta Clientes</h1>
+                    <div class="input-group">
+                        <InputNumber @bind-Value="ID" class="form-control"></InputNumber>
+                        <button type="button" class="btn btn-outline-primary oi oi-magnifying-glass"
+                            @onclick="Buscar"></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive ">
+                        <table border="1" class="table table-bordered table-striped ">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Tel&eacute;fono</th>
+                                    <th>Celular</th>
+                                    <th>Rnc</th>
+                                    <th>Email</th>
+                                    <th>Direcci&oacute;n</th>
+                                    <th>Ver</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tabla in Clientes)
+                                {
+                                    <tr>
+                                        <td>@tabla.ClienteId</td>
+                                        <td>@tabla.Nombre</td>
+                                        <td>@tabla.Teléfono</td>
+                                        <td>@tabla.Celular</td>
+                                        <td>@tabla.Rnc</td>
+                                        <td>@tabla.Email</td>
+                                        <td>@tabla.Dirección</td>
                                         <td><a href="RegistroCliente/@tabla.ClienteId">ver</a></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <span>Conteno: @Conteo</span>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-            
         </div>
     </div>
 </div>
@@ -57,6 +61,8 @@
 
     public int ID { get; set; }
 
+    public int Conteo;
+
     protected override void OnInitialized()
     {
 
@@ -64,22 +70,21 @@
 
     public async Task Buscar()
     {
-        if(ID == 0)
+        if (ID == 0)
         {
             Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
             StateHasChanged();
         }
         else
         {
-            var listClientes= await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
-            Clientes = listClientes.Where(c => c.ClienteId == ID).ToList(); 
+            Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.ClienteId == ID).ToList();
             StateHasChanged();
         }
-
+        Conteo = Clientes != null ? Clientes!.Count() : 0;
     }
 
     //public void Reiniciar()
     //{
-    //    Clientes = clientesBLL.GetList(c => true);
+    // Clientes = clientesBLL.GetList(c => true);
     //}
 }
