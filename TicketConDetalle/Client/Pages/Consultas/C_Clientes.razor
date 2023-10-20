@@ -1,0 +1,85 @@
+﻿@page "/ConsultaCliente"
+@inject HttpClient httpClient
+
+
+<div>    
+    <div class="row justify-content-start ">
+        <div class=" col-sm-10 col-md-9 col-lg-10 col-xl-xxl-7 ">
+                  <div class="card">
+        <div class="card-header">
+            <h1>Consulta Clientes</h1>
+            <div class="input-group">
+                <InputNumber @bind-Value="ID" class="form-control"></InputNumber>
+                <button type="button" class="btn btn-outline-primary oi oi-magnifying-glass" @onclick="Buscar"></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive ">
+                <table border="1" class="table table-bordered table-striped ">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th >ID</th>
+                            <th >Nombre</th>
+                            <th >Telefono</th>
+                            <th >Celular</th>
+                            <th >Rnc</th>
+                            <th >Email</th>
+                            <th >Direccion</th>
+                            <th>Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tabla in Clientes)
+                        {
+                            <tr>
+                                <td>@tabla.ClienteId</td>
+                                <td >@tabla.Nombre</td>
+                                <td >@tabla.Telefono</td>
+                                <td >@tabla.Celular</td>
+                                <td >@tabla.Rnc</td>
+                                <td >@tabla.Email</td>
+                                <td >@tabla.Direccion</td>
+                                        <td><a href="RegistroCliente/@tabla.ClienteId">ver</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+            
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Clientes> Clientes { get; set; } = new List<Clientes>();
+
+    public int ID { get; set; }
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    public async Task Buscar()
+    {
+        if(ID == 0)
+        {
+            Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+            StateHasChanged();
+        }
+        else
+        {
+            var listClientes= await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+            Clientes = listClientes.Where(c => c.ClienteId == ID).ToList(); 
+            StateHasChanged();
+        }
+
+    }
+
+    //public void Reiniciar()
+    //{
+    //    Clientes = clientesBLL.GetList(c => true);
+    //}
+}
