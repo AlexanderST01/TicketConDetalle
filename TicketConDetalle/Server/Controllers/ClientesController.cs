@@ -90,11 +90,30 @@ namespace TicketConDetalle.Server.Controllers
           {
               return Problem("Entity set 'Context.Clientes'  is null.");
           }
+
+            if (!ClientesExists(clientes.ClienteId))
+                _context.Clientes.Add(clientes);
+
+            else
+                _context.Clientes.Update(clientes);
+
             _context.Clientes.Add(clientes);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetClientes", new { id = clientes.ClienteId }, clientes);
         }
+
+        //public async Task<ActionResult<Clientes>> PostClientes(Clientes clientes)
+        //{
+        //    if (_context.Clientes == null)
+        //    {
+        //        return Problem("Entity set 'Context.Clientes'  is null.");
+        //    }
+        //    _context.Clientes.Add(clientes);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetClientes", new { id = clientes.ClienteId }, clientes);
+        //}
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]

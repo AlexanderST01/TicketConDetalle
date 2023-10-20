@@ -52,6 +52,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.5, )"
+            },
+            "Radzen.Blazor": {
+              "target": "Package",
+              "version": "[4.18.1, )"
             }
           },
           "imports": [
@@ -133,6 +137,10 @@
               "target": "Package",
               "version": "[7.0.5, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[7.0.12, )"
@@ -142,6 +150,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.12, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.9, )"
             }
           },
           "imports": [

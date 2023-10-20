@@ -20,20 +20,12 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/Pages/Consultas/C_Clientes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFzXENfQ2xpZW50ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+[C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/Pages/Registros/R_Clientes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfQ2xpZW50ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/ProgramacionApliacada3-2023(1)/TicketConDetalle/TicketConDetalle/Client/_Imports.razor]

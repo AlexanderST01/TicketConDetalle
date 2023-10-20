@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UUcZ8RwmznSj3BxVA2+h5iB9hUCDvPdVRKPCKG4qdvEC9f4mLtCxNmcTVb3UDYosssxcO1DkxJzhnf1bJNk07w==",
+  "dgSpecHash": "indlGHbg7s6k3SZ+T/dfvA5p5/fudc2hQoKXsVvvKe1w5YhXkVqB1tzx5ipRnKaH20H4UWpmlAHWFpWo8Mrjjw==",
   "success": true,
   "projectFilePath": "C:\\ProgramacionApliacada3-2023(1)\\TicketConDetalle\\TicketConDetalle\\Client\\TicketConDetalle.Client.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\alexa\\.nuget\\packages\\dartsassbuilder\\1.0.0\\dartsassbuilder.1.0.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.5\\microsoft.aspnetcore.authorization.7.0.5.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnetcore.components\\7.0.5\\microsoft.aspnetcore.components.7.0.5.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\7.0.5\\microsoft.aspnetcore.components.analyzers.7.0.5.nupkg.sha512",
@@ -28,7 +29,9 @@
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.jsinterop\\7.0.5\\microsoft.jsinterop.7.0.5.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.jsinterop.webassembly\\7.0.5\\microsoft.jsinterop.webassembly.7.0.5.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\radzen.blazor\\4.18.1\\radzen.blazor.4.18.1.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.io.pipelines\\7.0.0\\system.io.pipelines.7.0.0.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\system.linq.dynamic.core\\1.3.0\\system.linq.dynamic.core.1.3.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.5\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.5.nupkg.sha512"
