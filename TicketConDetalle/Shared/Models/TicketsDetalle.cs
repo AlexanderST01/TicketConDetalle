@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TicketConDetalle.Shared.Models
 {
-    internal class TicketsDetalle
+    public class TicketsDetalle
     {
         [Key]
         public int DetalleId { get; set; }
