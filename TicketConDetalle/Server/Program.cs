@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using TicketConDetalle.Server.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace TicketConDetalle
 {
@@ -12,6 +14,10 @@ namespace TicketConDetalle
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+
+            var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
+            builder.Services.AddDbContext<Context>(op => op.UseSqlite(ConStr));
 
             var app = builder.Build();
 
