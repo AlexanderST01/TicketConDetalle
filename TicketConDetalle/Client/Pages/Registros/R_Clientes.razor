@@ -51,14 +51,14 @@
                     </div>
                     <div class="col">
                         <label>Telefono:</label>
-                        <InputText @bind-Value="cliente.Telefono" class="form-control"></InputText>
-                        <ValidationMessage For="@(() => cliente.Telefono)" />
+                        <InputText @bind-Value="cliente.Teléfono" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => cliente.Teléfono)" />
                     </div>
                 </div>
                 <div class="row">
                     <label style="margin-right:1rem">Dirección:</label>
-                    <InputText @bind-Value="cliente.Direccion" class="form-control"></InputText>
-                    <ValidationMessage For="@(() => cliente.Direccion)" />
+                    <InputText @bind-Value="cliente.Dirección" class="form-control"></InputText>
+                    <ValidationMessage For="@(() => cliente.Dirección)" />
                 </div>
             </div>
             <div class="card-footer text-center">
@@ -67,12 +67,7 @@
                 <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="oi oi-trash" /></button>
             </div>
         </div>
-    </div>  
-
-    
-
-
-    
+    </div>        
 
 </EditForm>
 

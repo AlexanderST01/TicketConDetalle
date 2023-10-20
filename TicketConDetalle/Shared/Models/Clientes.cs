@@ -18,7 +18,7 @@ namespace TicketConDetalle.Shared.Models
 
         [Required(ErrorMessage = "El Telefono es obligatorio")]
         [StringLength(12, ErrorMessage = "El compo Telefono supera los 12 caracteres")]
-        public string? Telefono { get; set; }
+        public string? Teléfono { get; set; }
 
         [Required(ErrorMessage = "El Celular es obligatorio")]
         [StringLength(12, ErrorMessage = "El compo Celular supera los 12 caracteres")]
@@ -34,7 +34,7 @@ namespace TicketConDetalle.Shared.Models
 
         [Required(ErrorMessage = "La Direccion es obligatorio")]
         [StringLength(80, ErrorMessage = "El compo Direccion supera los 80 caracteres")]
-        public string? Direccion { get; set; }
+        public string? Dirección { get; set; }
 
     }
 }
