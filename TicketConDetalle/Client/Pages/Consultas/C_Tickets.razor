@@ -1,0 +1,112 @@
+﻿@page "/ConsultaTicket"
+@inject HttpClient httpClient
+
+<div>
+    <div class="row justify-content-start ">
+        <div class=" col-sm-7 col-md-7 col-lg-10 col-xl-xxl-9 ">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Consulta Tickets</h1>
+                    <div class="row">
+                        <div class="col">
+                            <label>Desde: </label>
+                            <InputDate @bind-Value="Desde" class="form-control "></InputDate>
+                        </div>
+                        <div class="col">
+                            <label>Hasta: </label>
+                            <InputDate @bind-Value="Hasta" class="form-control "></InputDate>
+                        </div>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="ID" class="form-control"></InputNumber>
+                            <button type="button" class="btn btn-outline-info oi oi-magnifying-glass" @onclick="Buscar"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive ">
+                        <table border="1" class="table table-bordered table-striped ">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Cliente ID</th>
+                                    <th>Solicitado por</th>
+                                    <th>Asunto</th>
+                                    <th>Descripcion</th>
+                                    <th>Ver</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tabla in tickets)
+                                {
+                                    <tr>
+                                        <td>@tabla.TicketId</td>
+                                        <td>@tabla.Fecha.ToString("MM/dd/yyyy")</td>
+                                        <td>@tabla.ClienteId</td>
+                                        <td>@tabla.SolicitadoPor</td>
+                                        <td>@tabla.Asunto</td>
+                                        <td>@tabla.Descripcion</td>
+                                        <td><a href="RegistroTicket/@tabla.TicketId">ver</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <span>Conteno: @Conteo</span>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Tickets> tickets { get; set; } = new List<Tickets>();
+
+    public int ID { get; set; }
+
+    public int Conteo;
+
+    public DateTime Desde { get; set; }
+    public DateTime Hasta { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Desde = DateTime.Now.AddMonths(-1);
+        Hasta = DateTime.Now;
+    }
+
+    //protected override void OnInitialized()
+    //{
+    //    tickets = TicketBLL.GetList(t => true);
+    //    Desde = DateTime.Now.AddMonths(-1);
+    //    Hasta = DateTime.Now;
+    //}
+
+    public async Task Buscar()
+    {
+        if (ID == 0)
+        {
+            tickets = (await httpClient.GetFromJsonAsync<List<Tickets>>($"api/Tickets")).Where(t => t.Fecha >= Desde.Date && t.Fecha <= Hasta).ToList();
+            StateHasChanged();
+        }
+        else
+        {
+            tickets = (await httpClient.GetFromJsonAsync<List<Tickets>>($"api/Tickets")).Where(t => t.TicketId == ID && t.Fecha >= Desde.Date && t.Fecha <= Hasta).ToList();
+            StateHasChanged();
+        }
+        Conteo = tickets != null ? tickets!.Count() : 0;
+    }
+    //public void Buscar()
+    //{
+    //    if (ID > 0)
+    //        tickets = TicketBLL.GetList(t => t.ClienteId == ID && t.Fecha >= Desde.Date && t.Fecha <= Hasta);
+
+    //    else
+    //        tickets = TicketBLL.GetList(t => t.Fecha >= Desde.Date && t.Fecha <= Hasta);
+
+    //}
+}
