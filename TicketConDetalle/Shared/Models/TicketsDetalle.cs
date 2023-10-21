@@ -12,7 +12,7 @@ namespace TicketConDetalle.Shared.Models
         [Key]
         public int DetalleId { get; set; }
         public int TicketId { get; set; }
-        public Clientes Emisor { get; set; }
-        public string Mensaje { get; set; }
+        public string? Emisor { get; set; }
+        public string? Mensaje { get; set; }
     }
 }

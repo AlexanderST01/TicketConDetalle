@@ -36,6 +36,5 @@ namespace TicketConDetalle.Shared.Models
         [ForeignKey("TicketId")]
         public ICollection<TicketsDetalle> TicketsDetalles { get; set; } = new List<TicketsDetalle>();
 
-
     }
 }
