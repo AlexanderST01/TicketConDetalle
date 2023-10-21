@@ -12,7 +12,9 @@ namespace TicketConDetalle.Shared.Models
         [Key]
         public int DetalleId { get; set; }
         public int TicketId { get; set; }
+        [Required(ErrorMessage ="Es un campo obligatorio")]
         public string? Emisor { get; set; }
+        [Required(ErrorMessage = "Es un campo obligatorio")]
         public string? Mensaje { get; set; }
     }
 }
