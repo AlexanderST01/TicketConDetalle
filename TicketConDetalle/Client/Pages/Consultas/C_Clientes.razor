@@ -7,10 +7,54 @@
             <div class="card">
                 <div class="card-header">
                     <h1>Consulta Cliente</h1>
-                    <div class="input-group">
-                        <InputNumber @bind-Value="ID" class="form-control"></InputNumber>
-                        <button type="button" class="btn btn-primary oi oi-magnifying-glass"
-                            @onclick="Buscar"></button>
+                    <div class="row">
+                        <div class="row">
+                            <label>filtrar por</label>
+                            <div class="col">
+                                <InputSelect class="form-select" @bind-Value="opciones">
+                                    <option value="0" selected>ID</option>
+                                    <option value="1">Nombre</option>
+                                    <option value="2">Telefono</option>
+                                    <option value="3">Celular</option>
+                                    <option value="4">Rnc</option>
+                                    <option value="5">Email</option>
+                                    <option value="6">Direcci&oacute;n</option>
+                                </InputSelect>
+                            </div>
+                            <div class="col input-group">
+                                <button class="form-control oi oi-magnifying-glass" type="button" @onclick="Buscar"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+
+                                @switch (opciones)
+                                {
+                                    case 0:
+                                        <InputNumber class="form-control" @bind-Value="ClienteAuxiliar.ClienteId"></InputNumber>
+                                        break;
+
+                                    case 1:
+                                        <InputText class="form-control" @bind-Value="ClienteAuxiliar.Nombre"></InputText>
+                                        break;
+                                    case 2:
+                                        <InputText class="form-control" @bind-Value="ClienteAuxiliar.Teléfono"></InputText>
+                                        break;
+                                    case 3:
+                                        <InputText class="form-control" @bind-Value="ClienteAuxiliar.Celular"></InputText>
+                                        break;
+                                    case 4:
+                                        <InputText class="form-control" @bind-Value="ClienteAuxiliar.Rnc"></InputText>
+                                        break;
+                                    case 5:
+                                        <InputText class="form-control" @bind-Value="ClienteAuxiliar.Email"></InputText>
+                                        break;
+                                    case 6:
+                                        <InputText class="form-control" @bind-Value="ClienteAuxiliar.Dirección"></InputText>
+                                        break;
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -63,28 +107,115 @@
 
     public int Conteo;
 
+    public int opciones;
+    public DateTime Desde { get; set; }
+    public DateTime Hasta { get; set; }
+    public Clientes ClienteAuxiliar = new();
     protected override void OnInitialized()
     {
-
+        Desde = DateTime.Now.AddMonths(-1);
+        Hasta = DateTime.Now;
     }
 
     public async Task Buscar()
     {
-        if (ID == 0)
+        
+        switch (opciones)
         {
-            Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
-            StateHasChanged();
-        }
-        else
-        {
-            Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.ClienteId == ID).ToList();
-            StateHasChanged();
+            case 0:
+                if (ClienteAuxiliar.ClienteId == 0)
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.ClienteId == ClienteAuxiliar.ClienteId).ToList();
+                    StateHasChanged();
+                }
+                break;
+
+            case 1:
+                if (string.IsNullOrEmpty(ClienteAuxiliar.Nombre))
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(t => t.Nombre
+                        .Contains(ClienteAuxiliar.Nombre, StringComparison.OrdinalIgnoreCase)).ToList();
+                    StateHasChanged();
+                }
+                break;
+
+            case 2:
+                if (string.IsNullOrEmpty(ClienteAuxiliar.Teléfono))
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.Teléfono
+                        .Contains(ClienteAuxiliar.Teléfono, StringComparison.OrdinalIgnoreCase)).ToList();
+                    StateHasChanged();
+                }
+                break;
+
+            case 3:
+                if (string.IsNullOrEmpty(ClienteAuxiliar.Celular))
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.Celular
+                        .Contains(ClienteAuxiliar.Celular, StringComparison.OrdinalIgnoreCase)).ToList();
+                    StateHasChanged();
+                }
+                break;
+            case 4:
+                if (string.IsNullOrEmpty(ClienteAuxiliar.Rnc))
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.Rnc
+                        .Contains(ClienteAuxiliar.Rnc, StringComparison.OrdinalIgnoreCase)).ToList();
+                    StateHasChanged();
+                }
+                break;
+            case 5:
+                if (string.IsNullOrEmpty(ClienteAuxiliar.Email))
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.Email
+                        .Contains(ClienteAuxiliar.Email, StringComparison.OrdinalIgnoreCase)).ToList();
+                    StateHasChanged();
+                }
+                break;
+            case 6:
+                if (string.IsNullOrEmpty(ClienteAuxiliar.Dirección))
+                {
+                    Clientes = await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes");
+                    StateHasChanged();
+                }
+                else
+                {
+                    Clientes = (await httpClient.GetFromJsonAsync<List<Clientes>>($"api/Clientes")).Where(c => c.Dirección
+                        .Contains(ClienteAuxiliar.Dirección, StringComparison.OrdinalIgnoreCase)).ToList();
+                    StateHasChanged();
+                }
+                break;                
         }
         Conteo = Clientes != null ? Clientes!.Count() : 0;
     }
-
-    //public void Reiniciar()
-    //{
-    // Clientes = clientesBLL.GetList(c => true);
-    //}
 }
