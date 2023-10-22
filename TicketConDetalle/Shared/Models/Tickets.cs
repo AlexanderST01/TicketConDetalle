@@ -29,9 +29,9 @@ namespace TicketConDetalle.Shared.Models
         [StringLength(100, ErrorMessage = "El compo Asunto supera los 100 caracteres")]
         public string? Asunto { get; set; }
 
-        [Required(ErrorMessage = "EL campo Descripcion es requerido")]
+        [Required(ErrorMessage = "EL campo Descripción es requerido")]
         [StringLength(100, ErrorMessage = "El compo Decripción supera los 100 caracteres")]
-        public string? Descripcion { get; set; }
+        public string? Descripción { get; set; }
 
         [ForeignKey("TicketId")]
         public ICollection<TicketsDetalle> TicketsDetalles { get; set; } = new List<TicketsDetalle>();

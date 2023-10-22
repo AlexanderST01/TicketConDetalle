@@ -46,7 +46,7 @@
                                         <InputText class="form-control" @bind-Value="ticketAuxiliar.Asunto"></InputText>
                                         break;
                                     case 3:
-                                        <InputText class="form-control" @bind-Value="ticketAuxiliar.Descripcion"></InputText>
+                                        <InputText class="form-control" @bind-Value="ticketAuxiliar.Descripción"></InputText>
                                         break;
                                 }
                             </div>
@@ -76,7 +76,7 @@
                                         <td>@tabla.ClienteId</td>
                                         <td>@tabla.SolicitadoPor</td>
                                         <td>@tabla.Asunto</td>
-                                        <td>@tabla.Descripcion</td>
+                                        <td>@tabla.Descripción</td>
                                         <td><a href="RegistroTicket/@tabla.TicketId">ver</a></td>
                                     </tr>
                                 }
@@ -158,15 +158,15 @@
                 break;
 
             case 3:
-                if (string.IsNullOrEmpty(ticketAuxiliar.Descripcion))
+                if (string.IsNullOrEmpty(ticketAuxiliar.Descripción))
                 {
                     tickets = (await httpClient.GetFromJsonAsync<List<Tickets>>($"api/Tickets")).Where(t => t.Fecha >= Desde.Date && t.Fecha <= Hasta).ToList();
                     StateHasChanged();
                 }
                 else
                 {
-                    tickets = (await httpClient.GetFromJsonAsync<List<Tickets>>($"api/Tickets")).Where(t => t.Descripcion
-                        .Contains(ticketAuxiliar.Descripcion, StringComparison.OrdinalIgnoreCase)
+                    tickets = (await httpClient.GetFromJsonAsync<List<Tickets>>($"api/Tickets")).Where(t => t.Descripción
+                        .Contains(ticketAuxiliar.Descripción, StringComparison.OrdinalIgnoreCase)
                         && t.Fecha >= Desde.Date && t.Fecha <= Hasta).ToList();
                     StateHasChanged();
                 }
